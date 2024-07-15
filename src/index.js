@@ -49,7 +49,7 @@ try {
           type: "list",
           name: "customer",
           message: "Select a customer",
-          choices: ["DEV: Frontend", "Internes"],
+          choices: ["DEV: Frontend", "DEV: Backend", "Internes"],
         },
       ]);
 

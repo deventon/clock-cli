@@ -2,6 +2,8 @@ export const parseIdFromName = (name) => {
   switch (name) {
     case "DEV: Frontend":
       return 1081919;
+    case "DEV: Backend":
+      return 1081920;
     case "Internes":
       return 16;
     case "Programmierung":
