@@ -1,3 +1,8 @@
+# Installing
+```bash
+npm install -g clock-cli
+```
+
 ### Start clock
 POST /v2/clock that will start a new entry with given customer/service/description.
 
