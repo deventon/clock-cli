@@ -21,7 +21,7 @@ try {
 
     return fs.existsSync(p)
       ? fs.existsSync(gitHeadPath)
-        ? fs.readFileSync(gitHeadPath, "utf-8").trim().split("/")[2]
+        ? fs.readFileSync(gitHeadPath, "utf-8").trim().split("/").pop()
         : getCurrentGitBranch(path.resolve(p, ".."))
       : false;
   };
