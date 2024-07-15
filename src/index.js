@@ -16,14 +16,21 @@ try {
   }
 
   const { user, apiKey } = await getUserData();
-  const getCurrentGitBranch = (p = process.cwd()) => {
+  const getGitInfo = (p = process.cwd()) => {
     const gitHeadPath = `${p}/.git/HEAD`;
 
-    return fs.existsSync(p)
-      ? fs.existsSync(gitHeadPath)
-        ? fs.readFileSync(gitHeadPath, "utf-8").trim().split("/")[2]
-        : getCurrentGitBranch(path.resolve(p, ".."))
-      : false;
+    if (fs.existsSync(p)) {
+      if (fs.existsSync(gitHeadPath)) {
+        const url = fs
+          .readFileSync(`${p}/.git/config`, "utf-8")
+          .match(/url = git@bitbucket.*\.git/)
+          .shift();
+        return {
+          branch: fs.readFileSync(gitHeadPath, "utf-8").trim().split("/").pop(),
+          repo: url.includes("frontend") ? "frontend" : "backend",
+        };
+      } else return getGitInfo(path.resolve(p, ".."));
+    } else return false;
   };
 
   program.action(async () => {
@@ -31,7 +38,7 @@ try {
       {
         type: "list",
         name: "mode",
-        message: "Welcome to CLIcko:do!",
+        message: "Welcome to Clockodo!",
         choices: [
           "Start clock",
           "Stop clock",
@@ -85,14 +92,17 @@ try {
     }
 
     if (mode === "Start development on current branch") {
+      const {repo, branch} = getGitInfo();
+
       await startClock({
         user,
         apiKey,
         customer: "DEV: Frontend",
         service: "Entwicklung",
-        customers_id: 1081919,
+        customers_id:
+          repo === "frontend" ? 1081919 : 1081920,
         services_id: 1,
-        text: getCurrentGitBranch(),
+        text: branch,
       });
     }
   });

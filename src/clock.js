@@ -46,10 +46,7 @@ export const startClock = async ({
   }
 };
 
-export const stopClock = async ({
-  user,
-  apiKey,
-}) => {
+export const stopClock = async ({ user, apiKey }) => {
   const spinner = ora(`Stopping clock...`).start();
 
   try {
