@@ -31,7 +31,7 @@ try {
       {
         type: "list",
         name: "mode",
-        message: "Welcome to CLIcko:do!",
+        message: "Welcome to Clockodo!",
         choices: [
           "Start clock",
           "Stop clock",
