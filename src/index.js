@@ -7,6 +7,7 @@ import "dotenv/config";
 import { parseIdFromName } from "./idMap.js";
 import { getUserData, deleteApiKey } from "./userData.js";
 import { startClock, stopClock } from "./clock.js";
+import { editRunningEntry } from "./runningEntry.js";
 
 try {
   const args = process.argv.slice(2);
@@ -43,6 +44,8 @@ try {
           "Start clock",
           "Stop clock",
           "Start development on current branch",
+          "Edit current entry",
+          "Exit",
         ],
       },
     ]);
@@ -92,18 +95,21 @@ try {
     }
 
     if (mode === "Start development on current branch") {
-      const {repo, branch} = getGitInfo();
+      const { repo, branch } = getGitInfo();
 
       await startClock({
         user,
         apiKey,
         customer: "DEV: Frontend",
         service: "Entwicklung",
-        customers_id:
-          repo === "frontend" ? 1081919 : 1081920,
+        customers_id: repo === "frontend" ? 1081919 : 1081920,
         services_id: 1,
         text: branch,
       });
+    }
+
+    if (mode === "Edit current entry") {
+      await editRunningEntry({ user, apiKey });
     }
   });
 
